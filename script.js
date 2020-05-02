@@ -95,7 +95,7 @@ const results = () => {
             answerContainers[questionNumber].style.color ='red';
         }
     });
-    resultsContainer.innerHTML = `${numCorrect} out of ${questions.length}`;
+    resultsContainer.innerHTML = `You scored ${numCorrect} out of ${questions.length}`;
 };
 const showSlide = (n) => {
     

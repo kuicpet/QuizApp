@@ -42,3 +42,9 @@ hr{
     height: 12.5em;
     margin-top: 2.5em;
 }
+.quiz{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-items: center;
+}
