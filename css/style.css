@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css?family=Baloo+Paaji+2|Karla&display=swap");
+*{
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-items: center;
+    width: 100%;
+    min-height: 100vh;
+    font-weight: 400;
+    font-family: 'Karla',sans-serif;
+    color: #00072D !important;
+}
+main{
+    flex: 1 0 auto;
+}
+hr{
+    width: 20%;
+    color: #00072D !important;
+    border-bottom: 1px solid #00072D;
+}
+.slide{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.active-slide{
+    position: relative;
+    opacity: 1;
+    z-index: 2;
+}
+.quix-container{
+    height: 12.5em;
+    margin-top: 2.5em;
+}
