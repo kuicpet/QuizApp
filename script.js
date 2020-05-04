@@ -1,141 +1,156 @@
-//Variables
-const quizContainer = document.getElementById('quiz');
-const resultsContainer = document.getElementById('results');
-const submitButton = document.getElementById('submit');
-
+const options = document.querySelector(".options").children;
+const answerTrackerContainer = document.querySelector(".answers-tracker");
+const questionNumber = document.querySelector(".question-num-value");
+const totalQuestions = document.querySelector(".total-questions");
+const correctAnswer = document.querySelector(".correct-answers");
+const totalQuestion2 = document.querySelector(".total-question2");
+const percentage = document.querySelector(".percentage");
+const question = document.querySelector(".question");
+const op1 = document.querySelector(".option1");
+const op2 = document.querySelector(".option2");
+const op3 = document.querySelector(".option3");
+let questionIndex = 1;
+let index = 0;
+let myArray = [];
+let myArr = [];
+let score = 0;
+//Questions,Options & Anwers
 const questions = [
     {
-        question : "1. Who invented Javascript",
-        answers : {
-            a: "Douglas Crocford",
-            b: "Sheryl Sandberg",
-            c: "Brendan Eich"
-        },
-        correctAnswer: "c" 
+        q: "HTML stands for?",
+        options: ["HyperText Markup Language","HyperText Makeup Language","Higher Text MarkupLanguage"],
+        answer: 1
     },
     {
-        question : "2. What does HTML mean",
-        answers : {
-            a: "Hyper Text Markup Language",
-            b: "Hypo Text MakeUp Language",
-            c: "Hyper Text Makeup Language"
-        },
-        correctAnswer: "a"
+        q: "CSS stands for?",
+        options: ["Cascading Style Sheets","Critical Style Sheets","Cascading Style Shelves"],
+        answer: 1
     },
     {
-        question : "3. Which is a Javascript package manager?",
-        answers : {
-            a: "Node JS",
-            b: "npm",
-            c: "Typescript"
-        },
-        correctAnswer: "b"
+        q: "WWW stands for?",
+        options: ["World Wide Window","Web Wide World","World Wide Web"],
+        answer: 3
     },
     {
-        question : "4. Which tool can be used to ensure code quality?",
-        answers: {
-            a: "JQuery",
-            b: "Angular",
-            c: "EsLint"
-        },
-        correctAnswer: "c"
+        q: "Which is not a Programming Language?",
+        options: ["JavaScript","Python","HTML"],
+        answer: 3
     },
     {
-        question: "5. Which is not a Programming Language?",
-        answers: {
-            a: "Python",
-            b: "React",
-            c: "PHP"
-        },
-        correctAnswer: "b"
-    }
-];
+        q: "What Tool can be used to ensure code quality",
+        options: ["Git","EsLint","ReactJS"],
+        answer: 2
+    },
+
+]
+
 //Functions
-const quiz = () => {
-    const output = [];
-    questions.forEach(
-        (currentQuestion, questionNumber) => {
-            const answers = [];
-            for(letter in currentQuestion.answers){
-                answers.push(
-                    `<label>
-                        <input class = "mx-2 my-3" type = "radio" name = "question${questionNumber}" value = "${letter}">
-                        ${letter}: ${currentQuestion.answers[letter]}
-                    </label>`
-                );
-            }
+totalQuestions.innerHTML = questions.length;
+const load = () => {
+    questionNumber.innerHTML = index+1;
+    question.innerHTML = questions[questionIndex].q;
+    op1.innerHTML = questions[questionIndex].options[0];
+    op2.innerHTML = questions[questionIndex].options[1];
+    op3.innerHTML = questions[questionIndex].options[2];
+    index++;
+}
 
-            output.push(
-                `<div class="slide">
-                    <div class ="question">${currentQuestion.question}</div>
-                    <div class = "answers">${answers.join('')}</div>
-                </div>
-              `
-            );
-    })
+const check = (element) => {
+    //Checking correct answer
+if(element.id==questions[questionIndex].answer){
+    element.classList.add("correct");
+    updateAnswerTracker("correct");
+    score++;
+} else{
+    element.classList.add("wrong");
+    updateAnswerTracker("wrong");
+}
+disabledOptions()
+}
 
-    quizContainer.innerHTML = output.join('');
-
-};
-const results = () => {
-    const answerContainers = quizContainer.querySelectorAll('.answers');
-    let numCorrect = 0;
-    questions.forEach((currentQuestion, questionNumber) => {
-        
-        //Find selected answers
-        const answerContainer = answerContainers[questionNumber];
-        const selector = `input[name=question${questionNumber}]:checked`;
-        const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-        
-        //if answer is correct
-        if(userAnswer === currentQuestion.correctAnswer){
-            numCorrect++;
-            answerContainers[questionNumber].style.color = 'green';
-        } else {
-            answerContainers[questionNumber].style.color ='red';
+const disabledOptions = () => {
+    for(let i = 0;i < options.length;i++){
+        options[i].classList.add("disabled");
+        if(options[i].id == questions[questionIndex].answer){
+            options[i].classList.add("correct");
         }
-    });
-    resultsContainer.innerHTML = `You scored ${numCorrect} out of ${questions.length}`;
-};
-const showSlide = (n) => {
-    
-    slides[currentSlide].classList.remove('active-slide');
-    slides[n].classList.add('active-slide');
-    currentSlide = n;
-    
-    if(currentSlide === 0){
-        previousButton.style.display = 'none';
-    } else {
-        previousButton.style.display = 'inline-block';
-    }
-    if(currentSlide === slides.length-1){
-        nextButton.style.display ='none';
-        submitButton.style.display = 'inline-block';
-    } else {
-        nextButton.style.display = 'inline-block';
-        submitButton.style.display = 'none';
     }
 }
-const showNextSlide = () => {
-    showSlide(currentSlide + 1);
+
+const enabledOptions = () => {
+    for(let i=0;i<options.length;i++){
+        options[i].classList.remove("disabled","correct","wrong");
+    }
 }
-const showPreviousSlide = () => {
-    showSlide(currentSlide - 1);
+
+const validate = () => {
+    if(!options[0].classList.contains("disabled")){
+        alert("Please select an Option!")
+    } else{
+        enabledOptions();
+        randomQuestion();
+    }
 }
 
+const next = () => {
+    validate();
+}
 
-quiz();
-//Pagination
-const previousButton = document.getElementById('previous');
-const nextButton = document.getElementById('next');
-const slides = document.querySelectorAll('.slide');
-let currentSlide = 0;
-//Show first Slide
-showSlide(currentSlide);
+const randomQuestion = () => {
+    let randomNumber = Math.floor(Math.random()*questions.length);
+    let duplicate = 0;
+    if(index == questions.length){
+        quizOver();
+    } else{
+        if(myArray.length > 0){
+            for(let i=0;i<myArray.length;i++){
+                if(myArray[i] == randomNumber){
+                    duplicate = 1;
+                    break;
+                }
+            }
+            if(duplicate == 1){
+                randomQuestion();
+            } else {
+                questionIndex = randomNumber;
+                load();
+            }
+        }
+        if(myArray.length == 0){
+            questionIndex = randomNumber;
+            load();
+            myArr.push(questionIndex);
+        }
+    }
 
-//Event Listeners
-submitButton.addEventListener('click',results);
-previousButton.addEventListener('click', showPreviousSlide);
-nextButton.addEventListener('click', showNextSlide);
+   console.log("myArr" + myArr);
+    myArray.push(randomNumber);
+    load();
+}
 
+const answerTracker = () => {
+    for(let i = 0;i<questions.length;i++){
+        const div = document.createElement("div");
+        div.classList.add("circle");
+        answerTrackerContainer.appendChild(div);
+    }
+}
+const updateAnswerTracker = (classNam) => {
+    answerTrackerContainer.children[index-1].classList.add(classNam);
+}
 
+const quizOver = () => {
+    document.querySelector(".quiz-over").classList.add("show");
+    correctAnswer.innerHTML = score;
+    totalQuestion2.innerHTML = questions.length;
+    percentage.innerHTML = (score/questions.length) * 100 + "%";
+}
+
+const tryAgain = () => {
+    window.location.reload();
+}
+
+window.onload = function(){
+    randomQuestion();
+    answerTracker();
+}
