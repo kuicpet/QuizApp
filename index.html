@@ -24,7 +24,7 @@
                                 <div id="2" class="option3 opt my-3 py-2" onclick="check(this)"></div>
                             </div>
                         <div class="next">
-                            <button class="btn btn-secondary my-3 px-5"  onclick="next()">Next</button>
+                            <button class="btn btn-secondary my-3 px-5" id="next"  onclick="next()">Next</button>
                         </div>
                         <div class="my-2">
                             <p id="progress">Question <span class="question-num"></span> of <span class="total-question"></span></p>
@@ -36,9 +36,8 @@
                     <div class="quiz-over">
                         <div class="box text-center m-3">
                         <h3>
-                            Good Try!<br>
                             You got <span class="correct-answers"></span> out of <span class="total-question2"></span>correct<br>
-                            That's is <span class="percentage"></span>try again!
+                            That's is <span class="percentage"></span>.
                         </h3>
                         <button class="btn btn-secondary px-5 my-3" type="button" onclick="tryAgain()">TryAgain</button>
                     </div>

@@ -5,7 +5,7 @@ const answerTrackerContainer = document.querySelector(".answer-tracker");
 const opt1 = document.querySelector(".option1");
 const opt2 = document.querySelector(".option2");
 const opt3 = document.querySelector(".option3");
-const nextButton = document.querySelector(".next");
+const nextButton = document.getElementById(".next");
 const result = document.getElementById("result");
 const progress = document.getElementById("progress");
 const questionNumberSpan = document.querySelector(".question-num");
@@ -151,7 +151,7 @@ function quizOver(){
 function tryAgain(){
   window.location.reload();
 }
- 
+
 
 window.onload=function(){
   randomQuestion();
